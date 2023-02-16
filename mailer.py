@@ -10,7 +10,6 @@ def send_mail(recipient: str, subject: str, body: str) -> None:
 
     if email_sender_address is None:
         print("No email sender address set, set EMAIL_SENDER_ADDRESS to mail")
-        return
 
     # Connect to the Gmail SMTP server
     email_sender_host = os.environ.get('EMAIL_SENDER_HOST')
@@ -29,13 +28,10 @@ def send_mail(recipient: str, subject: str, body: str) -> None:
         smtp_server.login(email_sender_address, email_sender_password)
 
     # Construct the email message
-    msg = EmailMessage()
     msg.set_content(body)
     msg['To'] = recipient
     msg['From'] = f'JoJo Transcribe <{email_sender_address}>'
     msg['Subject'] = subject
-
-    # Send the email
     smtp_server.send_message(msg)
 
     # Disconnect from the server
